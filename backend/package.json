@@ -7,7 +7,7 @@
     "dev" :"nodemon src/index.js"
   },
   "keywords": [],
-  "author": "rajzmanish",
+  "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
