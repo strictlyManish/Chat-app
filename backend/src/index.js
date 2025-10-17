@@ -6,29 +6,29 @@ import cookie_parser from 'cookie-parser';
 import messageRoutes from './routes/message.route.js';
 import cors from 'cors';
 
+import { app, io, server } from './lib/soket.js';
 
 
 dotenv.config();
-const app = express();
 const PORT = process.env.PORT
 
 
 app.use(express.json());
 app.use(cookie_parser());
+
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
 }))
 
 
+
+
 app.use('/api/auth', authRoutes);
 app.use("/api/messages", messageRoutes);
 
 
-
-
-
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log('server runnig on port ' + PORT);
     conectDB();
 })

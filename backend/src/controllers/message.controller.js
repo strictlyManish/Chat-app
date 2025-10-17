@@ -1,12 +1,13 @@
 import cloudinary from "../lib/cloudinary.js";
+import { getReceiverSocketId } from "../lib/soket.js";
 import User from "../models/user.model.js";
 import Message from './../models/message.model.js';
 
 
 export const getUsersForSidebar = async (req, res) => {
     try {
-        const loggedInUserId = req.user._id;
-        const filterUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
+        const loggedInuserId = req.user._id;
+        const filterUsers = await User.find({ _id: { $ne: loggedInuserId } }).select("-password");
         res.status(200).json(filterUsers)
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' })
@@ -36,7 +37,7 @@ export const getMessages = async (req, res) => {
 export const sendMessage = async (req, res) => {
     try {
         const { text, image } = req.body;
-        const { id: receiverid } = req.params;
+        const { id: receiverId } = req.params;
         const senderId = req.user._id;
 
         let imageUrl;
@@ -47,7 +48,7 @@ export const sendMessage = async (req, res) => {
         }
 
         const newMessage = await Message.create({
-            receiverid,
+            receiverId,
             senderId,
             text,
             image: imageUrl
@@ -55,7 +56,11 @@ export const sendMessage = async (req, res) => {
 
         await newMessage.save();
 
-        //todo: realtime functionlity goes here => soket.io
+
+        const receiverSocketId = getReceiverSocketId(receiverId);
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+        }
 
         res.status(201).json(newMessage)
 
