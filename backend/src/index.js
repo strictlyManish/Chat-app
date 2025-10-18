@@ -6,13 +6,13 @@ import cookie_parser from 'cookie-parser';
 import messageRoutes from './routes/message.route.js';
 import cors from 'cors';
 
-import { app, io, server } from './lib/soket.js';
+import { app, server } from './lib/soket.js';
 
 
 dotenv.config();
 const PORT = process.env.PORT
 
-
+    
 app.use(express.json());
 app.use(cookie_parser());
 
