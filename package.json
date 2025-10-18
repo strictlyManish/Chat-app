@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "npm start --prefix backend"
   },
   "repository": {
     "type": "git",
@@ -17,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/strictlyManish/Chat-app/issues"
   },
-  "homepage": "https://github.com/strictlyManish/Chat-app#readme"
+  "homepage": "https://github.com/strictlyManish/Chat-app#readme",
+  "dependencies": {
+    "backend": "^0.0.0"
+  }
 }
