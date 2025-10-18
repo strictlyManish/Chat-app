@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
   // remove accidental space after 'dist '
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-  // ✅ FIXED: use '/*' instead of '*'
+
   app.get('/*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../frontend/dist/index.html'));
   });
